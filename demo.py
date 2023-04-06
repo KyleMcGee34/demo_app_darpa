@@ -8,8 +8,6 @@ from pathlib import Path
 import ast
 import codecs
 
-'''# Text Generation'''
-
 dirpath = Path('text_files/')
 if dirpath.exists() and dirpath.is_dir():
     shutil.rmtree(dirpath)
@@ -149,12 +147,8 @@ if select_prompt == 'Pro Ukrainian Tweet':
 tab1, tab2 = st.tabs(["Create Synthetic Text", "Create Synthetic Image"])
 
 with tab1:
+   '''# Text Generation'''
    if st.button('Generate Text'):
-      try:
-        shutil.rmtree('single_text_file')
-      except:
-         pass
-      os.makedirs('single_text_file')
       request_url = "%s/api/v1/model" % url 
       if Model == str(requests.get("%s/api/v1/model" % url, headers=headers).json()['result']).replace('/','-'):
          pass
@@ -163,8 +157,6 @@ with tab1:
 
          loaded_model = requests.get("%s/api/v1/model" % url, headers=headers).json()
       
-      
-
       request_url_generate = "%s/api/v1/generate" % url
 
       #Data for Text generation
@@ -203,74 +195,6 @@ with tab1:
          st.markdown(generated_text.strip())
       except:
          '''Someone else is generating text right now. Please try again.'''
-      # st.markdown(generated_text.strip())
-      
-      # with codecs.open(f'single_text_file/{genID}.txt', 'w+', 'utf-8') as f1:
-      #    f1.write(generated_text.strip())
-
-      # with open(f'single_text_file/{genID}.txt', 'rb') as file:
-      #    ste.download_button('Download Text File', file, file_name=f'{genID}.txt')
 
 with tab2:
-   number_of_files = st.number_input('How Many Text Files Would You Like to Generate?', value=5, min_value=2,max_value=50)
-   if st.button('Generate Multiple Text Files'):
-      '''The synthetic text will appear below one by one for the amount of files that you requested. At the end, there will be an option to download the final zip file.'''
-      try:
-        shutil.rmtree('multiple_text_files')
-      except:
-         pass
-      os.makedirs('multiple_text_files')
-      try:
-         shutil.rmtree('final_zip_file')
-      except:
-         pass
-      os.makedirs('final_zip_file')
-      request_url = "%s/api/v1/model" % url 
-      if Model == str(requests.get("%s/api/v1/model" % url, headers=headers).json()['result']).replace('/','-'):
-         pass
-      else:
-         response = requests.put(request_url,json={'model': Model}, headers=headers)
-
-         loaded_model = requests.get("%s/api/v1/model" % url, headers=headers).json()
-       #Data for Text generation
-      json_data = {
-         'prompt': prompt
-
-         ########Most Commonly Modified Settings #######
-         ,'max_length':token_length #Number of tokens to generate. (4 characters is about one token)
-         ,'singleline':singleline #Output formatting option. When enabled, removes everything after the first line of the output, including the newline.
-         ,'temperature': temperature #Randomness of sampling. High values can increase creativity but may make text less sensible. Lower values will make text more predictable but can become repetitious.
-         ########Most Commonly Modified Settings END #######
-
-         
-         ,'top_p': 0.9 #Top P Sampling - Used to discard unlikely text in the sampling process. Lower values will make text more predictable but can become repetitious. (Put this value on 1 to disable its effect)
-         ,'top_k':0 # Top k Sampling - Alternative sampling method, can be combined with top_p. (Put this value on 0 to disable its effect)
-         ,'tfs':1 #Alternative sampling method; it is recommended to disable top_p and top_k (set top_p to 1 and top_k to 0) if using this. 0.95 is thought to be a good value. (Put this value on 1 to disable its effect)
-         ,'top_a':0 #Top a Sampling - Alternative sampling method that reduces the randomness of the AI whenever the probability of one token is much higher than all the others. Higher values have a stronger effect. Set this setting to 0 to disable its effect.
-         ,'typical':1 #Typical Sampling - Alternative sampling method described in the paper \"Typical Decoding for Natural Language Generation\" (10.48550/ARXIV.2202.00666). The paper suggests 0.2 as a good value for this setting. Set this setting to 1 to disable its effect.
-         ,'disable_input_formatting' : True #needed so system doesn't pull input formatting from the GUI
-         ,'disable_output_formatting' : True #needed so system doesn't pull input formatting from the GUI
-         ,'frmtrmblln':True    #Output formatting option. When enabled, replaces all occurrences of two or more consecutive newlines in the output with one newline.
-         ,'frmtrmspch' :True   #Output formatting option. When enabled, removes #/@%{}+=~|\^<> from the output.
-         ,'frmttriminc' :True  #Output formatting option. When enabled, removes some characters from the end of the output such that the output doesn't end in the middle of a sentence. If the output is less than one sentence long, does nothing.
-         ,'rep_pen':1.1        #Base repetition penalty value.   If set higher than 0, only applies repetition penalty to the last few tokens of your story rather than applying it to the entire story. This slider controls the amount of tokens at the end of your story to apply it to.
-         ,'rep_pen_range':0    #Repetition penalty range. If set higher than 0, only applies repetition penalty to the last few tokens of your story rather than applying it to the entire story. This slider controls the amount of tokens at the end of your story to apply it to.
-         ,'rep_pen_slope':0    #Repetition penalty slope. Repetition penalty slope. If BOTH this setting and Rep Penalty Range are set higher than 0, will use sigmoid interpolation to apply repetition penalty more strongly on tokens that are closer to the end of your story. This setting controls the tension of the sigmoid curve; higher settings will result in the repetition penalty difference between the start and end of your story being more apparent. Setting this to 1 uses linear interpolation; setting this to 0 disables interpolation.
-         ,'max_context_length':1024 #Maximum number of tokens to send to the model.
-         ,'n':1
-         ,'sampler_full_determinism':False # If enabled, the generated text will always be the same as long as you use the same RNG seed, input and settings. If disabled, only the sequence of generated texts that you get when repeatedly generating text will be the same given the same RNG seed, input and settings.
-         }
-      request_url_generate = "%s/api/v1/generate" % url
-      for num in range(number_of_files):
-         response = requests.post(request_url_generate, json=json_data,headers=headers)
-         genID = datetime.now().strftime("%Y%m%d_%H%M%S%f")
-         generated_text = response.json()['results'][0]['text']
-         st.markdown(f'**Text File {num + 1}**')
-         st.markdown(generated_text.strip())
-      
-         with codecs.open(f'multiple_text_files/{genID}.txt', 'w+', 'utf-8') as f1:
-            f1.write(generated_text.strip())
-
-      shutil.make_archive('final_zip_file/text_zip_file', 'zip', '', 'multiple_text_files')
-      with open('final_zip_file/text_zip_file.zip', 'rb') as zipfile:
-         ste.download_button('Download Text Zip File', zipfile, file_name=f'text_files.zip')
+   '''# Image Generation'''
