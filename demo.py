@@ -120,6 +120,9 @@ pro_ukranian_tweet= """Examples of Pro-Ukrainian tweets:
 
 9.I didn't think it would get to this point. But it has and we are asking for your help. Russia has bombed ur homes and the people of Ukraine are struggling, we need to stop them.
 10."""
+
+ukraine_soldier = 'RAW photo, a close up portrait photo of 40 y.o.  Ukrainian Soldier, background is city ruins, (high detailed skin:1.2), 8k uhd, dslr, soft lighting, high quality, film grain, Fujifilm XT3'
+russian_soldier = 'RAW photo, a close up portrait photo of 40 y.o.  Russian Soldier, background is city ruins, (high detailed skin:1.2), 8k uhd, dslr, soft lighting, high quality, film grain, Fujifilm XT3'
        
 tab1, tab2 = st.tabs(["Create Synthetic Text", "Create Synthetic Image"])
 
@@ -212,9 +215,14 @@ with tab2:
    with col5:
       cfg_scale = st.slider('Choose CFG scale', 0.0,30.0,7.0,0.1, help='Controls how much the image generation process follows the text prompts. The higher the value, the more the image will stick to the prompt.')
    with col6:
-      steps = st.slider("Number of Steps", 1,150,20,1, help='Generally, more steps result in a higher-quality image but will take longer to create.')
+      steps = st.slider("Number of Steps", 1,150,40,1, help='Generally, more steps result in a higher-quality image but will take longer to create.')
    col7, col8 = st.columns(2)
    with col7:
       height = st.number_input('Enter Height of Picture', value=512, min_value=64,max_value=2048)
    with col8:
       width = st.number_input('Enter Width of Picture', value=512, min_value=64, max_value=2048)
+   select_prompt = st.selectbox('Select a prompt', ['Russian Soldier', 'Ukraine Soldier'])
+   if select_prompt == 'Russian Soldier':
+      prompt = russian_soldier
+   if select_prompt == 'Ukraine Soldier':
+      prompt = ukraine_soldier
