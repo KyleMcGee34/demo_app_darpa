@@ -236,7 +236,7 @@ with tab2:
          prompt = st.text_area(label = 'Enter Positive Prompt', value = 'snowy mountains, 8K, sunshine')
    with col10:
       if select_prompt == 'Custom Prompt':
-         negative_prompt = st.text_area(lable = 'Enter Negative Prompt', value = 'ugly, fake, CGI')
+         negative_prompt = st.text_area(label = 'Enter Negative Prompt', value = 'ugly, fake, CGI')
          
    if st.button('Generate Image'):
       url = "https://sd-darpa-02.chris-mckinley.website"
