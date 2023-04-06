@@ -204,3 +204,17 @@ with tab1:
 
 with tab2:
    '''# Image Generation'''
+   model = 'SDv2.1.ckpt'
+   sampler_index = 'Euler a'
+   seed = -1
+   
+   col5, col6 = st.columns(2)
+   with col5:
+      cfg_scale = st.slider('Choose CFG scale', 0.0,30.0,7.0,0.1, help='Controls how much the image generation process follows the text prompts. The higher the value, the more the image will stick to the prompt.')
+   with col6:
+      steps = st.slider("Number of Steps", 1,150,20,1, help='Generally, more steps result in a higher-quality image but will take longer to create.')
+   col7, col8 = st.columns(2)
+   with col7:
+      height = st.number_input('Enter Height of Picture', value=512, min_value=64,max_value=2048)
+   with col8:
+      width = st.number_input('Enter Width of Picture', value=512, min_value=64, max_value=2048)
