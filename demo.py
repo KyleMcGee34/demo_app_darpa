@@ -147,7 +147,7 @@ if select_prompt == 'Pro Ukrainian Tweet':
    prompt = pro_ukranian_tweet
    singleline = True 
    
-tab1, tab2 = st.tabs(["Create One Text File", "Create Multiple Text Files"])
+tab1, tab2 = st.tabs(["Create Synthetic Text", "Create Synthetic Image"])
 
 with tab1:
    if st.button('Generate Text'):
@@ -198,7 +198,10 @@ with tab1:
          }
 
       response = requests.post(request_url_generate, json=json_data,headers=headers)
-      genID = datetime.now().strftime("%Y%m%d_%H%M%S%f")
+      try:
+         genID = datetime.now().strftime("%Y%m%d_%H%M%S%f")
+      except:
+         '''Someone else is generating text right now. Please try again.'''
       generated_text = response.json()['results'][0]['text']
       st.markdown(generated_text.strip())
       
