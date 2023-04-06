@@ -238,6 +238,7 @@ with tab2:
          
    if st.button('Generate Image'):
       url = "https://sd-darpa-02.chris-mckinley.website"
+      option_payload = {"sd_model_checkpoint": model}
       x = requests.post(url=f'{url}/sdapi/v1/options', json=option_payload, headers=headers)
       payload = {
         "prompt": prompt,
