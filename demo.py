@@ -192,6 +192,7 @@ with tab1:
       
       try:   
          generated_text = response.json()['results'][0]['text']
+         '''#### Synthetic text based on your selections:'''
          st.markdown(generated_text.strip())
       except:
          '''Someone else is generating text right now. Please try again.'''
