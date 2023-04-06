@@ -121,8 +121,6 @@ pro_ukranian_tweet= """Examples of Pro-Ukrainian tweets:
 9.I didn't think it would get to this point. But it has and we are asking for your help. Russia has bombed ur homes and the people of Ukraine are struggling, we need to stop them.
 10."""
 with st.sidebar:
-    Model = st.selectbox('Select a Model',
-                         ["gpt2-xl", "EleutherAI_gpt-j-6B" ,"facebook_galactica-6.7b",'facebook_opt-13b'])
     temperature = st.slider('Temperature', min_value = 0.1, max_value = 2.0, step = 0.1, value = 0.5, help = 'Randomness of sampling. High values can increase creativity but may make text less sensible. Lower values will make text more predictable but can become repetitious')
     token_length = st.slider('Token length', min_value = 16, max_value = 512, step = 1, value = 200, help = 'Number of tokens to generate. (4 characters is about one token)')
     select_prompt = st.selectbox('Select a prompt',
@@ -148,8 +146,10 @@ tab1, tab2 = st.tabs(["Create Synthetic Text", "Create Synthetic Image"])
 
 with tab1:
    '''# Text Generation'''
+   '''The model that will be generating text in these examples is gpt2-xl, a 1.5B parameter version of GBT-2 which is a transformer-based language model created and released by OpenAI. The model is a pretrained model on English language using a causal language modeling (CLM) objective.'''
    if st.button('Generate Text'):
-      request_url = "%s/api/v1/model" % url 
+      request_url = "%s/api/v1/model" % url
+      Model = 'gpt2-xl'
       if Model == str(requests.get("%s/api/v1/model" % url, headers=headers).json()['result']).replace('/','-'):
          pass
       else:
