@@ -200,3 +200,5 @@ with tab1:
 
 with tab2:
    '''# Image Generation'''
+   with st.sidebar:
+      model = st.selectbox('Select a Model', ['SD15NewVAEpruned.ckpt [27a4ac756c]', 'SDv2.1.ckpt'], help='The selected model will be used to create the images.')
