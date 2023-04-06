@@ -256,5 +256,6 @@ with tab2:
       r = response.json()
       for i in r['images']:
          image = Image.open(io.BytesIO(base64.b64decode(i.split(",",1)[0])))
-         
+      
+      '''#### Synthetic image based on your selections:'''
       st.image(image)
