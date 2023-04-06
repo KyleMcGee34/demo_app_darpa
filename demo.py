@@ -221,8 +221,17 @@ with tab2:
       height = st.number_input('Enter Height of Picture', value=512, min_value=64,max_value=2048)
    with col8:
       width = st.number_input('Enter Width of Picture', value=512, min_value=64, max_value=2048)
-   select_prompt = st.selectbox('Select a prompt', ['Russian Soldier', 'Ukraine Soldier'])
+   select_prompt = st.selectbox('Select a prompt', ['Russian Soldier', 'Ukraine Soldier', 'Custom Prompt'])
    if select_prompt == 'Russian Soldier':
       prompt = russian_soldier
+      negative_prompt = ''
    if select_prompt == 'Ukraine Soldier':
       prompt = ukraine_soldier
+      negative_prompt = ''
+   col9, col10 = st.columns(2)
+   with col9:
+      if select_prompt == 'Custom Prompt':
+         prompt = st.text_area('Enter Positive Prompt')
+   with col10:
+      if select_prompt == 'Custom Prompt':
+         negative_prompt = st.text_area('Enter Negative Prompt')
