@@ -3,7 +3,6 @@ import streamlit_ext as ste
 import requests
 import os
 import pandas as pd
-from datetime import datetime,date
 import shutil
 from pathlib import Path
 import ast
@@ -198,18 +197,19 @@ with tab1:
          }
 
       response = requests.post(request_url_generate, json=json_data,headers=headers)
-      try:
-         genID = datetime.now().strftime("%Y%m%d_%H%M%S%f")
+      
+      try:   
+         generated_text = response.json()['results'][0]['text']
+         st.markdown(generated_text.strip())
       except:
          '''Someone else is generating text right now. Please try again.'''
-      generated_text = response.json()['results'][0]['text']
-      st.markdown(generated_text.strip())
+      # st.markdown(generated_text.strip())
       
-      with codecs.open(f'single_text_file/{genID}.txt', 'w+', 'utf-8') as f1:
-         f1.write(generated_text.strip())
+      # with codecs.open(f'single_text_file/{genID}.txt', 'w+', 'utf-8') as f1:
+      #    f1.write(generated_text.strip())
 
-      with open(f'single_text_file/{genID}.txt', 'rb') as file:
-         ste.download_button('Download Text File', file, file_name=f'{genID}.txt')
+      # with open(f'single_text_file/{genID}.txt', 'rb') as file:
+      #    ste.download_button('Download Text File', file, file_name=f'{genID}.txt')
 
 with tab2:
    number_of_files = st.number_input('How Many Text Files Would You Like to Generate?', value=5, min_value=2,max_value=50)
