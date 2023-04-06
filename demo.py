@@ -120,20 +120,7 @@ pro_ukranian_tweet= """Examples of Pro-Ukrainian tweets:
 
 9.I didn't think it would get to this point. But it has and we are asking for your help. Russia has bombed ur homes and the people of Ukraine are struggling, we need to stop them.
 10."""
-    
-if select_prompt == 'Netrual Russian Ukraine News Topic':
-   prompt = news_neutral_topic_RUS_UKR
-   singleline = True 
-if select_prompt == 'Pro Russian Military Profile':
-   prompt = pro_russian_military_profile
-   singleline = True 
-if select_prompt == 'Pro Ukrainian Military Profile':
-   prompt = pro_ukrainian_military_profile
-   singleline = True 
-if select_prompt == 'Pro Ukrainian Tweet':
-   prompt = pro_ukranian_tweet
-   singleline = True 
-   
+       
 tab1, tab2 = st.tabs(["Create Synthetic Text", "Create Synthetic Image"])
 
 with tab1:
@@ -147,6 +134,20 @@ with tab1:
       if select_prompt == 'Custom Prompt':
          prompt = st.text_area('Enter Custom Prompt', help = 'You will get much better output if you provide examples of what you expect back.')
          singleline = st.checkbox('Single Line?', value = False, help = "When enabled, removes everything after the first line of the output, including the newline.")
+         
+   if select_prompt == 'Netrual Russian Ukraine News Topic':
+      prompt = news_neutral_topic_RUS_UKR
+      singleline = True 
+   if select_prompt == 'Pro Russian Military Profile':
+      prompt = pro_russian_military_profile
+      singleline = True 
+   if select_prompt == 'Pro Ukrainian Military Profile':
+      prompt = pro_ukrainian_military_profile
+      singleline = True 
+   if select_prompt == 'Pro Ukrainian Tweet':
+      prompt = pro_ukranian_tweet
+      singleline = True 
+      
    if st.button('Generate Text'):
       request_url = "%s/api/v1/model" % url
       Model = 'gpt2-xl'
