@@ -209,7 +209,7 @@ with tab1:
 
 with tab2:
    '''# Image Generation'''
-   model = 'SDv2.1.ckpt'
+   model = 'SD15NewVAEpruned.ckpt [27a4ac756c]'
    sampler_index = 'Euler a'
    seed = -1
    
