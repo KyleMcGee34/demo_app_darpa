@@ -9,6 +9,7 @@ import ast
 import codecs
 from PIL import Image
 import io
+import base64
 
 dirpath = Path('text_files/')
 if dirpath.exists() and dirpath.is_dir():
