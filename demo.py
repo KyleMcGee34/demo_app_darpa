@@ -8,6 +8,7 @@ from pathlib import Path
 import ast
 import codecs
 from PIL import Image
+import io
 
 dirpath = Path('text_files/')
 if dirpath.exists() and dirpath.is_dir():
