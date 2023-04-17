@@ -213,6 +213,8 @@ with tab2:
    sampler_index = 'Euler a'
    seed = -1
    
+   st.markdown("![Alt Text](https://i0.wp.com/stable-diffusion-art.com/wp-content/uploads/2022/12/cat_euler_15.gif)")
+   
    col5, col6 = st.columns(2)
    with col5:
       cfg_scale = st.slider('Choose CFG scale', 0.0,30.0,7.0,0.1, help='Controls how much the image generation process follows the text prompts. The higher the value, the more the image will stick to the prompt.')
