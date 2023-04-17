@@ -125,7 +125,7 @@ pro_ukranian_tweet= """Examples of Pro-Ukrainian tweets:
 ukraine_soldier = 'RAW photo, a close up portrait photo of 40 y.o.  Ukrainian Soldier, background is city ruins, (high detailed skin:1.2), 8k uhd, dslr, soft lighting, high quality, film grain, Fujifilm XT3'
 russian_soldier = 'RAW photo, a close up portrait photo of 40 y.o.  Russian Soldier, background is city ruins, (high detailed skin:1.2), 8k uhd, dslr, soft lighting, high quality, film grain, Fujifilm XT3'
        
-tab1, tab2 = st.tabs(["Create Synthetic Text", "Create Synthetic Image"])
+tab1, tab2, tab3 = st.tabs(["Create Synthetic Text", "Create Synthetic Image", "Stable Diffusion Gif"])
 
 with tab1:
    '''# Text Generation'''
@@ -213,8 +213,6 @@ with tab2:
    sampler_index = 'Euler a'
    seed = -1
    
-   st.markdown("![Alt Text](https://i0.wp.com/stable-diffusion-art.com/wp-content/uploads/2022/12/cat_euler_15.gif)")
-   
    col5, col6 = st.columns(2)
    with col5:
       cfg_scale = st.slider('Choose CFG scale', 0.0,30.0,7.0,0.1, help='Controls how much the image generation process follows the text prompts. The higher the value, the more the image will stick to the prompt.')
@@ -261,3 +259,7 @@ with tab2:
       
       '''#### Synthetic image based on your selections:'''
       st.image(image)
+      
+   with tab3:
+      '''Example process of how an image is created using stable diffusion'''
+      st.markdown("![Alt Text](https://i0.wp.com/stable-diffusion-art.com/wp-content/uploads/2022/12/cat_euler_15.gif)")
