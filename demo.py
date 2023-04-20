@@ -196,25 +196,26 @@ with tab2:
       if select_prompt == 'Custom Prompt':
          prompt = st.text_area('Enter Custom Prompt',
                                value = """Examples of Pro-Ukrainian tweets:
-
-1.We need your help! Russia has been killing innocent people here in Ukraine. We don't have enough firepower to hold them off.
-
-2.We have been fighting for our freedom for months now. The Facists will not let up. We need your help to stop Russia and corrupt Putin.
-
-3.This war needs to stop and we need your assistance now. Russia has been destroying our schools and other buildings. This isnt right. We need your aid right now. So many lives have been lost due to the hands of the Russian Government. They are so corrupt and need to be stopped.
-
-4. Ukraine is in constant panic right now and need help from the West. We are begging the people need help in this fight.
-
-5. The people of Ukraine are suffering. Russia does not look like they are letting up soon and we need your help to stop them. 
-
-6.Russia is so corrupt. We are asking for your help to stop Putin and his army for the freedom of our people.  
-
-7.The people of Ukraine need help from NATO and the rest of the world. Russia has been killing innocent civilians and it is not right.
-
-8.Ukraine needs your help. We are so close to winning this war and stopping Russia, we just need a little more time and assistance from everyone.
-
-9.I didn't think it would get to this point. But it has and we are asking for your help. Russia has bombed ur homes and the people of Ukraine are struggling, we need to stop them.
-10.""",
+                               
+                               1.We need your help! Russia has been killing innocent people here in Ukraine. We don't have enough firepower to hold them off.
+                               
+                               2.We have been fighting for our freedom for months now. The Facists will not let up. We need your help to stop Russia and corrupt Putin.
+                               
+                               3.This war needs to stop and we need your assistance now. Russia has been destroying our schools and other buildings. This isnt right. We need your aid right now. So many lives have been lost due to the hands of the Russian Government. They are so corrupt and need to be stopped.
+                               
+                               4. Ukraine is in constant panic right now and need help from the West. We are begging the people need help in this fight.
+                               
+                               5. The people of Ukraine are suffering. Russia does not look like they are letting up soon and we need your help to stop them. 
+                               
+                               6.Russia is so corrupt. We are asking for your help to stop Putin and his army for the freedom of our people.  
+                               
+                               7.The people of Ukraine need help from NATO and the rest of the world. Russia has been killing innocent civilians and it is not right.
+                               
+                               8.Ukraine needs your help. We are so close to winning this war and stopping Russia, we just need a little more time and assistance from everyone.
+                               
+                               9.I didn't think it would get to this point. But it has and we are asking for your help. Russia has bombed ur homes and the people of Ukraine are struggling, we need to stop them.
+                               
+                               10.""",
                                help = 'You will get much better output if you provide examples of what you expect back.')
    with col4:
       if select_prompt == 'Custom Prompt':
