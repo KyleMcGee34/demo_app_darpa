@@ -163,8 +163,8 @@ with tab1:
         "negative_prompt": negative_prompt,
         "steps": steps,
         "cfg_scale": cfg_scale,
-        "height": height,
-        "width": width,
+        "height": 512,
+        "width": 512,
         "sampler_index": sampler_index,
         "seed": seed
         }
