@@ -125,9 +125,63 @@ pro_ukranian_tweet= """Examples of Pro-Ukrainian tweets:
 ukraine_soldier = 'RAW photo, a close up portrait photo of 40 y.o.  Ukrainian Soldier, background is city ruins, (high detailed skin:1.2), 8k uhd, dslr, soft lighting, high quality, film grain, Fujifilm XT3'
 russian_soldier = 'RAW photo, a close up portrait photo of 40 y.o.  Russian Soldier, background is city ruins, (high detailed skin:1.2), 8k uhd, dslr, soft lighting, high quality, film grain, Fujifilm XT3'
        
-tab1, tab2, tab3 = st.tabs(["Create Synthetic Text", "Create Synthetic Image", "Stable Diffusion Gif"])
+tab1, tab2, tab3 = st.tabs(["Create Synthetic Image", "Create Synthetic Text", "Stable Diffusion Gif"])
 
 with tab1:
+   '''# Image Generation'''
+   '''The model that will be generating images in these examples is SD15. This is a latent text-to-image diffusion model capable of generating photo-realistic images given any text input. This model was initialized of a previous checkpoint (SD12) and fine-tuned on 595k steps at 512x512 resolutions.'''
+   model = 'SD15NewVAEpruned.ckpt [27a4ac756c]'
+   sampler_index = 'Euler a'
+   seed = -1
+   
+   col5, col6 = st.columns(2)
+   with col5:
+      cfg_scale = st.slider('Choose CFG scale', 0.0,30.0,7.0,0.1, help='Controls how much the image generation process follows the text prompts. The higher the value, the more the image will stick to the prompt.')
+   with col6:
+      steps = st.slider("Number of Steps", 1,150,40,1, help='Generally, more steps result in a higher-quality image but will take longer to create.')
+   col7, col8 = st.columns(2)
+   with col7:
+      height = st.number_input('Enter Height of Picture', value=512, min_value=64,max_value=2048)
+   with col8:
+      width = st.number_input('Enter Width of Picture', value=512, min_value=64, max_value=2048)
+   select_prompt = st.selectbox('Select a prompt', ['Russian Soldier', 'Ukraine Soldier', 'Custom Prompt'])
+   if select_prompt == 'Russian Soldier':
+      prompt = russian_soldier
+      negative_prompt = ''
+   if select_prompt == 'Ukraine Soldier':
+      prompt = ukraine_soldier
+      negative_prompt = ''
+   col9, col10 = st.columns(2)
+   with col9:
+      if select_prompt == 'Custom Prompt':
+         prompt = st.text_area(label = 'Enter Positive Prompt', value = 'snowy mountains, 8K, sunshine')
+   with col10:
+      if select_prompt == 'Custom Prompt':
+         negative_prompt = st.text_area(label = 'Enter Negative Prompt', value = 'ugly, fake, CGI')
+         
+   if st.button('Generate Image'):
+      url = "https://sd-darpa-02.chris-mckinley.website"
+      option_payload = {"sd_model_checkpoint": model}
+      x = requests.post(url=f'{url}/sdapi/v1/options', json=option_payload, headers=headers)
+      payload = {
+        "prompt": prompt,
+        "negative_prompt": negative_prompt,
+        "steps": steps,
+        "cfg_scale": cfg_scale,
+        "height": height,
+        "width": width,
+        "sampler_index": sampler_index,
+        "seed": seed
+        }
+      response = requests.post(url=f'{url}/sdapi/v1/txt2img', json=payload, headers=headers)
+      r = response.json()
+      for i in r['images']:
+         image = Image.open(io.BytesIO(base64.b64decode(i.split(",",1)[0])))
+      
+      '''#### Synthetic image based on your selections:'''
+      st.image(image)
+
+with tab2:
    '''# Text Generation'''
    '''The model that will be generating text in these examples is gpt2-xl, a 1.5B parameter version of GBT-2 which is a transformer-based language model created and released by OpenAI. The model is a pretrained model on English language using a causal language modeling (CLM) objective.'''
    url = 'https://ka-darpa-02.chris-mckinley.website'
@@ -207,59 +261,6 @@ with tab1:
       except:
          '''Someone else is generating text right now. Please try again.'''
 
-with tab2:
-   '''# Image Generation'''
-   '''The model that will be generating images in these examples is SD15. This is a latent text-to-image diffusion model capable of generating photo-realistic images given any text input. This model was initialized of a previous checkpoint (SD12) and fine-tuned on 595k steps at 512x512 resolutions.'''
-   model = 'SD15NewVAEpruned.ckpt [27a4ac756c]'
-   sampler_index = 'Euler a'
-   seed = -1
-   
-   col5, col6 = st.columns(2)
-   with col5:
-      cfg_scale = st.slider('Choose CFG scale', 0.0,30.0,7.0,0.1, help='Controls how much the image generation process follows the text prompts. The higher the value, the more the image will stick to the prompt.')
-   with col6:
-      steps = st.slider("Number of Steps", 1,150,40,1, help='Generally, more steps result in a higher-quality image but will take longer to create.')
-   col7, col8 = st.columns(2)
-   with col7:
-      height = st.number_input('Enter Height of Picture', value=512, min_value=64,max_value=2048)
-   with col8:
-      width = st.number_input('Enter Width of Picture', value=512, min_value=64, max_value=2048)
-   select_prompt = st.selectbox('Select a prompt', ['Russian Soldier', 'Ukraine Soldier', 'Custom Prompt'])
-   if select_prompt == 'Russian Soldier':
-      prompt = russian_soldier
-      negative_prompt = ''
-   if select_prompt == 'Ukraine Soldier':
-      prompt = ukraine_soldier
-      negative_prompt = ''
-   col9, col10 = st.columns(2)
-   with col9:
-      if select_prompt == 'Custom Prompt':
-         prompt = st.text_area(label = 'Enter Positive Prompt', value = 'snowy mountains, 8K, sunshine')
-   with col10:
-      if select_prompt == 'Custom Prompt':
-         negative_prompt = st.text_area(label = 'Enter Negative Prompt', value = 'ugly, fake, CGI')
-         
-   if st.button('Generate Image'):
-      url = "https://sd-darpa-02.chris-mckinley.website"
-      option_payload = {"sd_model_checkpoint": model}
-      x = requests.post(url=f'{url}/sdapi/v1/options', json=option_payload, headers=headers)
-      payload = {
-        "prompt": prompt,
-        "negative_prompt": negative_prompt,
-        "steps": steps,
-        "cfg_scale": cfg_scale,
-        "height": height,
-        "width": width,
-        "sampler_index": sampler_index,
-        "seed": seed
-        }
-      response = requests.post(url=f'{url}/sdapi/v1/txt2img', json=payload, headers=headers)
-      r = response.json()
-      for i in r['images']:
-         image = Image.open(io.BytesIO(base64.b64decode(i.split(",",1)[0])))
-      
-      '''#### Synthetic image based on your selections:'''
-      st.image(image)
       
    with tab3:
       '''Example process of how an image is created using stable diffusion'''
