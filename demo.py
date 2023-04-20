@@ -209,6 +209,7 @@ with tab1:
 
 with tab2:
    '''# Image Generation'''
+   '''The model that will be generating images in these examples is SD15. This is a latent text-to-image diffusion model capable of generating photo-realistic images given any text input. This model was initialized of a previous checkpoint (SD12) and fine-tuned on 595k steps at 512x512 resolutions.'''
    model = 'SD15NewVAEpruned.ckpt [27a4ac756c]'
    sampler_index = 'Euler a'
    seed = -1
