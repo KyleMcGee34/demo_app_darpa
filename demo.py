@@ -129,7 +129,7 @@ tab1, tab2, tab3 = st.tabs(["Create Synthetic Image", "Create Synthetic Text", "
 
 with tab1:
    '''# Image Generation'''
-   '''The model that will be generating images in these examples is SD15. This is a latent text-to-image diffusion model capable of generating photo-realistic images given any text input. This model was initialized of a previous checkpoint (SD12) and fine-tuned on 595k steps at 512x512 resolutions.'''
+   '''The model that will be generating images in these examples is SD15. This is a latent text-to-image diffusion model capable of generating photo-realistic images given any text input. This model was initialized of a previous checkpoint (SD12) and fine-tuned on 595k steps at 512x512 resolutions. The resulting images below will be 512 x 512.'''
    model = 'SD15NewVAEpruned.ckpt [27a4ac756c]'
    sampler_index = 'Euler a'
    seed = -1
@@ -139,11 +139,6 @@ with tab1:
       cfg_scale = st.slider('Choose CFG scale', 0.0,30.0,7.0,0.1, help='Controls how much the image generation process follows the text prompts. The higher the value, the more the image will stick to the prompt.')
    with col6:
       steps = st.slider("Number of Steps", 1,150,40,1, help='Generally, more steps result in a higher-quality image but will take longer to create.')
-   col7, col8 = st.columns(2)
-   with col7:
-      height = st.number_input('Enter Height of Picture', value=512, min_value=64,max_value=2048)
-   with col8:
-      width = st.number_input('Enter Width of Picture', value=512, min_value=64, max_value=2048)
    select_prompt = st.selectbox('Select a prompt', ['Russian Soldier', 'Ukraine Soldier', 'Custom Prompt'])
    if select_prompt == 'Russian Soldier':
       prompt = russian_soldier
