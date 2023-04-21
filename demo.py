@@ -278,4 +278,5 @@ with tab2:
       
    with tab3:
       '''Example process of how an image is created using stable diffusion'''
+      '''Stable diffusion models use a diffusion process where an initial image is iteratively transformed by adding noise to it, gradually "diffusing" the image until it reaches a target image.'''
       st.markdown("![Alt Text](https://i0.wp.com/stable-diffusion-art.com/wp-content/uploads/2022/12/cat_euler_15.gif)")
